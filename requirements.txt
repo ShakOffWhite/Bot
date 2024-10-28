@@ -1,3 +1,0 @@
-flask
-botbuilder-core
-botbuilder-schema
