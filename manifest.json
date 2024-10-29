@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.14",
+  "version": "1.0.0",
+  "id": "e60ed7db-1d35-4d27-9e99-6d025bd2b907",
+  "packageName": "com.example.teamsapp",
+  "developer": {
+    "name": "Your Name",
+    "websiteUrl": "https://yourwebsite.com",
+    "privacyUrl": "https://yourprivacyurl.com",
+    "termsOfUseUrl": "https://yourtermsofuseurl.com"
+  },
+  "name": {
+    "short": "My App",
+    "full": "My Application"
+  },
+  "description": {
+    "short": "Описание вашего приложения",
+    "full": "Полное описание вашего приложения."
+  },
+  "icons": {
+    "outline": "outline-icon.png",
+    "color": "color-icon.png"
+  },
+  "accentColor": "#FFFFFF",
+  "staticTabs": [
+    {
+      "entityId": "myTab",
+      "name": "My Tab",
+      "contentUrl": "https://YOUR_PUBLIC_URL/index.html",
+      "websiteUrl": "https://YOUR_PUBLIC_URL/index.html",
+      "scopes": ["personal"]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["YOUR_PUBLIC_URL"]
+}
