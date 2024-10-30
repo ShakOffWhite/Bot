@@ -1,3 +1,4 @@
 Flask==2.0.3
 Werkzeug==2.0.3
 requests
+RUN apt-get update && apt-get install -y wine
