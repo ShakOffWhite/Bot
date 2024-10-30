@@ -12,7 +12,8 @@
 
     <script>
         document.getElementById('runButton').onclick = async function() {
-            const response = await fetch('http://127.0.0.1:5000/run', { method: 'POST' });
+            // Заменяем URL на Railway адрес
+            const response = await fetch('https://bot-production-52eb.up.railway.app/run', { method: 'POST' });
             const data = await response.json();
             document.getElementById('output').innerText = JSON.stringify(data, null, 2);
         };
