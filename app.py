@@ -1,6 +1,6 @@
 import os
 import openai
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    with open('index.html', 'r', encoding='utf-8') as f:
+        return f.read()
 
 @app.route('/ask', methods=['POST'])
 def ask():
