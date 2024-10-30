@@ -1,26 +1,31 @@
 import os
-import openai
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Получаем ключ API из переменной окружения
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
 @app.route('/')
 def index():
-    with open('index.html', 'r', encoding='utf-8') as f:
-        return f.read()
+    return open('index.html').read()  # Чтение index.html из общей папки
 
-@app.route('/ask', methods=['POST'])
-def ask():
-    user_input = request.form['user_input']
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": user_input}]
+@app.route('/clear-cache', methods=['POST'])
+def clear_cache():
+    instructions = (
+        "Чтобы очистить кэш в браузере:\n"
+        "1. Нажмите Ctrl + Shift + Delete (Windows) или Command + Shift + Delete (Mac).\n"
+        "2. Выберите временной диапазон и тип данных для удаления.\n"
+        "3. Нажмите 'Очистить данные'."
     )
-    answer = response['choices'][0]['message']['content']
-    return jsonify({'answer': answer})
+    return jsonify({'instructions': instructions})
+
+@app.route('/feature-2', methods=['POST'])
+def feature_2():
+    instructions = "Здесь будут инструкции для функции 2."
+    return jsonify({'instructions': instructions})
+
+@app.route('/feature-3', methods=['POST'])
+def feature_3():
+    instructions = "Здесь будут инструкции для функции 3."
+    return jsonify({'instructions': instructions})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
