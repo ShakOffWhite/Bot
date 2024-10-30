@@ -1,22 +1,69 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Teams App</title>
+    <title>Chat Bot</title>
+    <style>
+        body {
+            background-color: #2E1A47;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #chat-box {
+            background-color: #3E2A63;
+            border-radius: 10px;
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+        }
+        #user-input {
+            width: calc(100% - 60px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #send-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #5B2E7D;
+            color: white;
+            cursor: pointer;
+        }
+        #send-btn:hover {
+            background-color: #6A3B92;
+        }
+    </style>
 </head>
 <body>
-    <h1>Запуск приложения</h1>
-    <button id="runButton">Запустить</button>
-    <pre id="output"></pre>
+    <h1>Chat Bot</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Напишите ваше сообщение...">
+    <button id="send-btn">Отправить</button>
 
     <script>
-        document.getElementById('runButton').onclick = async function() {
-            // Заменяем URL на Railway адрес
-            const response = await fetch('https://bot-production-52eb.up.railway.app/run', { method: 'POST' });
-            const data = await response.json();
-            document.getElementById('output').innerText = JSON.stringify(data, null, 2);
-        };
+        document.getElementById('send-btn').onclick = function() {
+            const userInput = document.getElementById('user-input').value;
+            document.getElementById('chat-box').innerHTML += "<div>Вы: " + userInput + "</div>";
+            document.getElementById('user-input').value = '';
+
+            fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'user_input=' + encodeURIComponent(userInput)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('chat-box').innerHTML += "<div>Бот: " + data.answer + "</div>";
+                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+            });
+        }
     </script>
 </body>
 </html>
