@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, jsonify
-import openai
 import os
+import openai
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-# Установите ваш OpenAI API ключ
-openai.api_key = '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'
+# Получаем ключ API из переменной окружения
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/')
 def index():
