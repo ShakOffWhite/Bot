@@ -1,69 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Bot</title>
-    <style>
-        body {
-            background-color: #2E1A47;
-            color: white;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        #chat-box {
-            background-color: #3E2A63;
-            border-radius: 10px;
-            padding: 10px;
-            height: 400px;
-            overflow-y: scroll;
-            margin-bottom: 20px;
-        }
-        #user-input {
-            width: calc(100% - 60px);
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        #send-btn {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #5B2E7D;
-            color: white;
-            cursor: pointer;
-        }
-        #send-btn:hover {
-            background-color: #6A3B92;
-        }
-    </style>
-</head>
-<body>
-    <h1>Chat Bot</h1>
-    <div id="chat-box"></div>
-    <input type="text" id="user-input" placeholder="Напишите ваше сообщение...">
-    <button id="send-btn">Отправить</button>
+import os
+import openai
+from flask import Flask, request, jsonify
 
-    <script>
-        document.getElementById('send-btn').onclick = function() {
-            const userInput = document.getElementById('user-input').value;
-            document.getElementById('chat-box').innerHTML += "<div>Вы: " + userInput + "</div>";
-            document.getElementById('user-input').value = '';
+app = Flask(__name__)
 
-            fetch('/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'user_input=' + encodeURIComponent(userInput)
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('chat-box').innerHTML += "<div>Бот: " + data.answer + "</div>";
-                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
-            });
-        }
-    </script>
-</body>
-</html>
+# Получаем ключ API из переменной окружения
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+@app.route('/')
+def index():
+    return '''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat Bot</title>
+        <style>
+            body {
+                background-color: #2E1A47;
+                color: white;
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            }
+            #chat-box {
+                background-color: #3E2A63;
+                border-radius: 10px;
+                padding: 10px;
+                height: 400px;
+                overflow-y: scroll;
+                margin-bottom: 20px;
+            }
+            #user-input {
+                width: calc(100% - 60px);
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+            #send-btn {
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #5B2E7D;
+                color: white;
+                cursor: pointer;
+            }
+            #send-btn:hover {
+                background-color: #6A3B92;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Chat Bot</h1>
+        <div id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Напишите ваше сообщение...">
+        <button id="send-btn">Отправить</button>
+
+        <script>
+            document.getElementById('send-btn').onclick = function() {
+                const userInput = document.getElementById('user-input').value;
+                document.getElementById('chat-box').innerHTML += "<div>Вы: " + userInput + "</div>";
+                document.getElementById('user-input').value = '';
+
+                fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'user_input=' + encodeURIComponent(userInput)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chat-box').innerHTML += "<div>Бот: " + data.answer + "</div>";
+                    document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+                });
+            }
+        </script>
+    </body>
+    </html>
+    '''
+
+@app.route('/ask', methods=['POST'])
+def ask():
+    user_input = request.form['user_input']
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": user_input}]
+    )
+    answer = response['choices'][0]['message']['content']
+    return jsonify({'answer': answer})
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
