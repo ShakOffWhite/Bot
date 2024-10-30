@@ -1,11 +1,13 @@
-from flask import Flask, jsonify, send_from_directory
-import subprocess
 import os
 import requests
+import logging
+from flask import Flask, jsonify, send_from_directory, request
 
 app = Flask(__name__)
 
-# URL для загрузки файла (замените на ваш)
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+
 GITHUB_URL = 'https://raw.githubusercontent.com/ShakOffWhite/Bot/9916a55f9ac89b707559b7d980ec59267607bb86/menuu.exe'
 
 @app.route('/')
@@ -22,11 +24,18 @@ def run_exe():
         # Запись файла на диск
         with open(exe_path, 'wb') as f:
             f.write(response.content)
+        
+        # Проверьте, что файл был записан и имеет правильные права
+        if os.path.exists(exe_path):
+            logging.info(f'Файл загружен: {exe_path}')
+        else:
+            logging.error(f'Файл не был загружен: {exe_path}')
 
         # Запуск загруженного файла
         result = subprocess.run([exe_path], capture_output=True, text=True)
         return jsonify({'output': result.stdout, 'error': result.stderr}), 200
     except Exception as e:
+        logging.error(f'Ошибка: {str(e)}')
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
