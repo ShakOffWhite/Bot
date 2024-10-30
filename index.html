@@ -3,65 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Bot</title>
+    <title>Инструменты системного администратора</title>
     <style>
         body {
-            background-color: #2E1A47;
-            color: white;
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
             padding: 20px;
         }
-        #chat-box {
-            background-color: #3E2A63;
-            border-radius: 10px;
-            padding: 10px;
-            height: 400px;
-            overflow-y: scroll;
-            margin-bottom: 20px;
+        h1 {
+            color: #007BFF;
         }
-        #user-input {
-            width: calc(100% - 60px);
-            padding: 10px;
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
             border: none;
             border-radius: 5px;
-            margin-right: 10px;
-        }
-        #send-btn {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #5B2E7D;
-            color: white;
             cursor: pointer;
+            background-color: #007BFF;
+            color: white;
         }
-        #send-btn:hover {
-            background-color: #6A3B92;
+        button:hover {
+            background-color: #0056b3;
+        }
+        #instructions {
+            margin-top: 20px;
+            font-size: 18px;
+            white-space: pre-wrap; /* Позволяет отображать инструкции с переносами строк */
         }
     </style>
 </head>
 <body>
-    <h1>Chat Bot</h1>
-    <div id="chat-box"></div>
-    <input type="text" id="user-input" placeholder="Напишите ваше сообщение...">
-    <button id="send-btn">Отправить</button>
+    <h1>Инструменты системного администратора</h1>
+    <button onclick="getInstructions('clear-cache')">Очистить кэш</button>
+    <button onclick="getInstructions('feature-2')">Функция 2</button>
+    <button onclick="getInstructions('feature-3')">Функция 3</button>
+
+    <div id="instructions"></div>
 
     <script>
-        document.getElementById('send-btn').onclick = function() {
-            const userInput = document.getElementById('user-input').value;
-            document.getElementById('chat-box').innerHTML += "<div>Вы: " + userInput + "</div>";
-            document.getElementById('user-input').value = '';
-
-            fetch('/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: 'user_input=' + encodeURIComponent(userInput)
+        function getInstructions(feature) {
+            fetch('/' + feature, {
+                method: 'POST'
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('chat-box').innerHTML += "<div>Бот: " + data.answer + "</div>";
-                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+                document.getElementById('instructions').innerText = data.instructions;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                document.getElementById('instructions').innerText = 'Ошибка получения инструкций.';
             });
         }
     </script>
