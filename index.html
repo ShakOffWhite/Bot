@@ -1,22 +1,46 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Teams App</title>
+    <title>BIM Leaders Tools</title>
+    <script>
+        function openLink(linkId) {
+            fetch(`/open_link/${linkId}`)
+                .then(response => response.json())
+                .then(data => alert(data.message || data.error))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function clearTempCache() {
+            fetch('/clear_temp_cache', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function resetNetwork() {
+            fetch('/reset_network', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function mapDrives() {
+            fetch('/map_network_drives', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </head>
 <body>
-    <h1>Запуск приложения</h1>
-    <button id="runButton">Запустить</button>
-    <pre id="output"></pre>
-
-    <script>
-        document.getElementById('runButton').onclick = async function() {
-            // Заменяем URL на Railway адрес
-            const response = await fetch('https://bot-production-52eb.up.railway.app/run', { method: 'POST' });
-            const data = await response.json();
-            document.getElementById('output').innerText = JSON.stringify(data, null, 2);
-        };
-    </script>
+    <h1>BIM Leaders Tools</h1>
+    <button onclick="openLink(1)">My timesheet</button>
+    <button onclick="openLink(4)">Email</button>
+    <button onclick="openLink(5)">PowerAutomate</button>
+    <button onclick="clearTempCache()">Clear TEMP</button>
+    <button onclick="resetNetwork()">Reset Network Settings</button>
+    <button onclick="mapDrives()">Add all disks</button>
 </body>
 </html>
