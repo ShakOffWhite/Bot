@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>My Teams App</title>
 </head>
 <body>
-    <div>
-        <h1>Запуск приложения</h1>
-        <button id="runButton">Запустить .exe</button>
-    </div>
-    <script src="app.js"></script>
+    <h1>Запуск приложения</h1>
+    <button id="runButton">Запустить</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('runButton').onclick = async function() {
+            const response = await fetch('http://127.0.0.1:5000/run', { method: 'POST' });
+            const data = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+        };
+    </script>
 </body>
 </html>
