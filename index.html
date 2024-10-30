@@ -12,21 +12,10 @@
 
     <script>
         document.getElementById('runButton').onclick = async function() {
-            try {
-                // Запрос к серверу Railway для запуска .exe файла
-                const response = await fetch('https://bot-production-52eb.up.railway.app/run', { method: 'POST' });
-                
-                // Проверка успешности запроса
-                if (!response.ok) {
-                    throw new Error(`Ошибка: ${response.statusText}`);
-                }
-                
-                // Получение данных ответа и вывод на экран
-                const data = await response.json();
-                document.getElementById('output').innerText = JSON.stringify(data, null, 2);
-            } catch (error) {
-                document.getElementById('output').innerText = `Произошла ошибка: ${error.message}`;
-            }
+            // Заменяем URL на Railway адрес
+            const response = await fetch('https://bot-production-52eb.up.railway.app/run', { method: 'POST' });
+            const data = await response.json();
+            document.getElementById('output').innerText = JSON.stringify(data, null, 2);
         };
     </script>
 </body>
