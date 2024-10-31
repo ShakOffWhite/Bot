@@ -55,6 +55,9 @@
             border-radius: 8px;
             text-align: left;
         }
+        .link-container {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -81,9 +84,19 @@
             <span class="icon">🛠️</span>
             <div class="card-title">Управління процесами</div>
         </div>
+        <div class="card" onclick="getInstructions('approve-vacation')">
+            <span class="icon">🌴</span>
+            <div class="card-title">Затвердити відпустку</div>
+        </div>
     </div>
 
     <div id="instructions"></div>
+
+    <div class="link-container">
+        <a href="https://forms.monday.com/forms/58d87fea635719fed0df60f62f6dd8a5?r=use1" target="_blank">
+            <img src="img.png" alt="Approve Vacation" style="width: 200px; height: auto;">
+        </a>
+    </div>
 
     <script>
         function getInstructions(feature) {
