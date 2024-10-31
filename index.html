@@ -1,45 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Инструменты системного администратора</title>
+    <title>Інструменти системного адміністратора</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #2D2E30; /* Темний фон */
+            color: #FFFFFF;
             text-align: center;
             padding: 20px;
         }
         h1 {
-            color: #007BFF;
+            color: #4DB1F4; /* Колір заголовка */
         }
         button {
-            padding: 10px 20px;
-            margin: 10px;
+            padding: 12px 24px;
+            margin: 15px;
             font-size: 16px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            background-color: #007BFF;
+            background-color: #4DB1F4; /* Колір кнопки */
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #348FCE; /* Колір при наведенні */
+        }
+        .icon {
+            margin-right: 8px;
+            font-size: 20px;
         }
         #instructions {
             margin-top: 20px;
             font-size: 18px;
-            white-space: pre-wrap; /* Позволяет отображать инструкции с переносами строк */
+            white-space: pre-wrap;
+            background-color: #3A3B3D;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-    <h1>Инструменты системного администратора</h1>
-    <button onclick="getInstructions('clear-cache')">Очистить кэш</button>
-    <button onclick="getInstructions('feature-2')">Функция 2</button>
-    <button onclick="getInstructions('feature-3')">Функция 3</button>
+    <h1>Інструменти системного адміністратора</h1>
+    <button onclick="getInstructions('clear-cache')">
+        <span class="icon">🧹</span> Очистити кеш
+    </button>
+    <button onclick="getInstructions('feature-2')">
+        <span class="icon">⚙️</span> Функція 2
+    </button>
+    <button onclick="getInstructions('feature-3')">
+        <span class="icon">🖥️</span> Функція 3
+    </button>
+    <button onclick="getInstructions('restart-service')">
+        <span class="icon">🔄</span> Перезапустити службу
+    </button>
+    <button onclick="getInstructions('check-network')">
+        <span class="icon">🌐</span> Перевірити мережу
+    </button>
+    <button onclick="getInstructions('manage-process')">
+        <span class="icon">🛠️</span> Управління процесами
+    </button>
 
     <div id="instructions"></div>
 
@@ -53,8 +80,8 @@
                 document.getElementById('instructions').innerText = data.instructions;
             })
             .catch(error => {
-                console.error('Ошибка:', error);
-                document.getElementById('instructions').innerText = 'Ошибка получения инструкций.';
+                console.error('Помилка:', error);
+                document.getElementById('instructions').innerText = 'Помилка отримання інструкцій.';
             });
         }
     </script>
