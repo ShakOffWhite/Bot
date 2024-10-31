@@ -58,5 +58,12 @@ def manage_process():
     )
     return jsonify({'instructions': instructions})
 
+@app.route('/approve-vacation', methods=['POST'])
+def manage_process():
+    instructions = (
+        "https://forms.monday.com/forms/58d87fea635719fed0df60f62f6dd8a5?r=use1\n"
+    )
+    return jsonify({'instructions': instructions})
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
