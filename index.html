@@ -7,34 +7,44 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2D2E30; /* Темний фон */
+            background-color: #2D2E30;
             color: #FFFFFF;
             text-align: center;
             padding: 20px;
         }
         h1 {
-            color: #4DB1F4; /* Колір заголовка */
+            color: #4DB1F4;
         }
-        button {
-            padding: 12px 24px;
-            margin: 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: #4DB1F4; /* Колір кнопки */
-            color: white;
+        .card-container {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
-            transition: background-color 0.3s ease;
+            gap: 15px;
+            margin-top: 20px;
         }
-        button:hover {
-            background-color: #348FCE; /* Колір при наведенні */
+        .card {
+            background-color: #3A3B3D;
+            padding: 20px;
+            border-radius: 8px;
+            width: 200px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .icon {
-            margin-right: 8px;
-            font-size: 20px;
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .card-title {
+            font-size: 18px;
+            color: #4DB1F4;
+            margin: 10px 0;
         }
         #instructions {
             margin-top: 20px;
@@ -49,24 +59,29 @@
 </head>
 <body>
     <h1>Інструменти системного адміністратора</h1>
-    <button onclick="getInstructions('clear-cache')">
-        <span class="icon">🧹</span> Очистити кеш
-    </button>
-    <button onclick="getInstructions('clear-autocad-cache')">
-    <span class="icon">🔧</span> Очистити кеш AutoCAD
-</button>
-    <button onclick="getInstructions('feature-3')">
-        <span class="icon">🖥️</span> Функція 3
-    </button>
-    <button onclick="getInstructions('restart-service')">
-        <span class="icon">🔄</span> Перезапустити службу
-    </button>
-    <button onclick="getInstructions('check-network')">
-        <span class="icon">🌐</span> Перевірити мережу
-    </button>
-    <button onclick="getInstructions('manage-process')">
-        <span class="icon">🛠️</span> Управління процесами
-    </button>
+
+    <div class="card-container">
+        <div class="card" onclick="getInstructions('clear-cache')">
+            <span class="icon">🧹</span>
+            <div class="card-title">Очистити кеш</div>
+        </div>
+        <div class="card" onclick="getInstructions('clear-autocad-cache')">
+            <span class="icon">🔧</span>
+            <div class="card-title">Очистити кеш AutoCAD</div>
+        </div>
+        <div class="card" onclick="getInstructions('restart-service')">
+            <span class="icon">🔄</span>
+            <div class="card-title">Перезапустити службу</div>
+        </div>
+        <div class="card" onclick="getInstructions('check-network')">
+            <span class="icon">🌐</span>
+            <div class="card-title">Перевірити мережу</div>
+        </div>
+        <div class="card" onclick="getInstructions('manage-process')">
+            <span class="icon">🛠️</span>
+            <div class="card-title">Управління процесами</div>
+        </div>
+    </div>
 
     <div id="instructions"></div>
 
