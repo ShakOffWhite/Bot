@@ -55,36 +55,33 @@
             border-radius: 8px;
             text-align: left;
         }
-        .link-container {
-            margin-top: 30px;
-        }
     </style>
 </head>
 <body>
     <h1>HELP TOOL</h1>
 
     <div class="card-container">
-        <div class="card" onclick="getInstructions('clear-cache')">
+        <div class="card" onclick="showInstructions('clearCache')">
             <span class="icon">🧹</span>
             <div class="card-title">Очистити кеш</div>
         </div>
-        <div class="card" onclick="getInstructions('clear-autocad-cache')">
+        <div class="card" onclick="showInstructions('clearAutocadCache')">
             <span class="icon">🔧</span>
             <div class="card-title">Очистити кеш AutoCAD</div>
         </div>
-        <div class="card" onclick="getInstructions('restart-service')">
+        <div class="card" onclick="showInstructions('restartService')">
             <span class="icon">🔄</span>
             <div class="card-title">Перезапустити службу</div>
         </div>
-        <div class="card" onclick="getInstructions('check-network')">
+        <div class="card" onclick="showInstructions('checkNetwork')">
             <span class="icon">🌐</span>
             <div class="card-title">Перевірити мережу</div>
         </div>
-        <div class="card" onclick="getInstructions('manage-process')">
+        <div class="card" onclick="showInstructions('manageProcess')">
             <span class="icon">🛠️</span>
             <div class="card-title">Управління процесами</div>
         </div>
-        <div class="card" onclick="getInstructions('approve-vacation')">
+        <div class="card" onclick="showInstructions('approveVacation')">
             <span class="icon">🌴</span>
             <div class="card-title">Затвердити відпустку</div>
         </div>
@@ -93,18 +90,17 @@
     <div id="instructions"></div>
 
     <script>
-        function getInstructions(feature) {
-            fetch('/' + feature, {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('instructions').innerText = data.instructions;
-            })
-            .catch(error => {
-                console.error('Помилка:', error);
-                document.getElementById('instructions').innerText = 'Помилка отримання інструкцій.';
-            });
+        const instructions = {
+            clearCache: "Щоб очистити кеш у браузері:\n1. Натисніть Ctrl + Shift + Delete (Windows) або Command + Shift + Delete (Mac).\n2. Виберіть часовий діапазон та тип даних для видалення.\n3. Натисніть 'Очистити дані'.",
+            clearAutocadCache: "Щоб очистити кеш у AutoCAD:\n1. Закрийте AutoCAD.\n2. Перейдіть до папки: C:\\Users\\<Ім'я_Користувача>\\AppData\\Local\\Autodesk\\AutoCAD 2022\\R23.1\\enu\\Cache\n3. Видаліть усі файли в цій папці.\n4. Запустіть AutoCAD заново.",
+            restartService: "Щоб перезапустити службу:\n1. Відкрийте командний рядок від імені адміністратора.\n2. Введіть 'net stop <назва служби>' та натисніть Enter.\n3. Введіть 'net start <назва служби>' та натисніть Enter.",
+            checkNetwork: "Щоб перевірити стан мережі:\n1. Відкрийте командний рядок.\n2. Введіть 'ping google.com' та натисніть Enter.\n3. Переконайтесь, що ви отримуєте відповідь від сервера.",
+            manageProcess: "Щоб завершити процес:\n1. Відкрийте диспетчер завдань.\n2. Знайдіть потрібний процес у списку.\n3. Натисніть правою кнопкою миші та виберіть 'Завершити завдання'.",
+            approveVacation: "Ссылка на форму для утверждения отпуска:\nhttps://forms.monday.com/forms/58d87fea635719fed0df60f62f6dd8a5?r=use1"
+        };
+
+        function showInstructions(type) {
+            document.getElementById('instructions').innerText = instructions[type];
         }
     </script>
 </body>
