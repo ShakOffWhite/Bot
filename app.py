@@ -37,6 +37,17 @@ def check_network():
     )
     return jsonify({'instructions': instructions})
 
+@app.route('/clear-autocad-cache', methods=['POST'])
+def clear_autocad_cache():
+    instructions = (
+        "Щоб очистити кеш у AutoCAD:\n"
+        "1. Закрийте AutoCAD.\n"
+        "2. Перейдіть до папки: C:\\Users\\<Ім'я_Користувача>\\AppData\\Local\\Autodesk\\AutoCAD 2022\\R23.1\\enu\\Cache\n"
+        "3. Видаліть усі файли в цій папці.\n"
+        "4. Запустіть AutoCAD заново."
+    )
+    return jsonify({'instructions': instructions})
+
 @app.route('/manage-process', methods=['POST'])
 def manage_process():
     instructions = (
