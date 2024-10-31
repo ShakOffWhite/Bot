@@ -7,54 +7,50 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2D2E30; /* Темний фон */
-            color: #FFFFFF;
+            background-color: #1a1c25;
+            color: #ffffff;
             text-align: center;
             padding: 20px;
         }
         h1 {
-            color: #4DB1F4; /* Колір заголовка */
+            color: #FFCE31;
         }
         button {
-            padding: 12px 24px;
-            margin: 15px;
+            padding: 10px 20px;
+            margin: 10px;
             font-size: 16px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            background-color: #4DB1F4; /* Колір кнопки */
+            background-color: #007BFF;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #348FCE; /* Колір при наведенні */
-        }
-        .icon {
-            margin-right: 8px;
-            font-size: 20px;
+            background-color: #0056b3;
         }
         #instructions {
             margin-top: 20px;
             font-size: 18px;
             white-space: pre-wrap;
-            background-color: #3A3B3D;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: left;
+            color: #FFCE31;
+        }
+        a {
+            color: #FFCE31;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Help Tool</h1>
+    <h1>Інструменти системного адміністратора</h1>
     <button onclick="getInstructions('clear-cache')">
         <span class="icon">🧹</span> Очистити кеш
     </button>
-    <button onclick="getInstructions('feature-2')">
-        <span class="icon">⚙️</span> INSTRUCTIONS FOR A NEW 
-EMPLOYEE
+    <button onclick="getInstructions('new-employee')">
+        <span class="icon">📄</span> INSTRUCTIONS FOR A NEW EMPLOYEE
     </button>
     <button onclick="getInstructions('feature-3')">
         <span class="icon">🖥️</span> Функція 3
@@ -70,6 +66,13 @@ EMPLOYEE
     </button>
 
     <div id="instructions"></div>
+    
+    <!-- Гиперссылка для новых сотрудников -->
+    <p style="margin-top: 20px;">
+        <a href="https://bimleaders-my.sharepoint.com/:b:/g/personal/hryhoriv_bim-ae_com/EVv2eEzqoHxEq_BZrZoujSEBVz3RbNly11FcUCVXFWY0BQ?e=1BQ70d" target="_blank">
+            Завантажити інструкцію для нового співробітника
+        </a>
+    </p>
 
     <script>
         function getInstructions(feature) {
