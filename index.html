@@ -13,39 +13,6 @@
             padding: 20px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-         
-        .form-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #3A3B3D;
-            padding: 20px;
-            border-radius: 8px;
-            width: 300px;
-            text-align: left;
-        }
-        .form-popup input {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-            border-radius: 4px;
-            border: 1px solid #4DB1F4;
-        }
-        .form-popup button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4DB1F4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-popup button:hover {
-            background-color: #3689c4;
-        }
-
         h1 {
             color: #4DB1F4;
             margin-top: 50px; /* Отступ вниз, чтобы разместить кнопки сверху */
@@ -118,18 +85,6 @@
 
     <h1 id="title">HELP TOOL</h1>
 
- <button onclick="openForm()">Забула пароль</button>
-    
-    <div class="form-popup" id="forgotPasswordForm">
-        <h2>Відновлення пароля</h2>
-        <label for="surname">Фамилия:</label>
-        <input type="text" id="surname" placeholder="Введите фамилию">
-        <label for="reason">Причина:</label>
-        <input type="text" id="reason" placeholder="Введите причину">
-        <button onclick="submitForgotPassword()">Отправить</button>
-        <button onclick="closeForm()">Закрыть</button>
-    </div>
-
     <div class="card-container">
         <div class="card" onclick="showInstructions('clearCache')">
             <span class="icon">🧹</span>
@@ -193,72 +148,37 @@
             });
             document.getElementById('instructions').style.backgroundColor = isDarkTheme ? "#3A3B3D" : "#F0F0F0";
         }
-function openForm() {
-            document.getElementById('forgotPasswordForm').style.display = 'block';
+
+        function changeLanguage(lang) {
+            const translations = {
+                uk: {
+                    title: "HELP TOOL",
+                    clearCacheTitle: "Очистити кеш",
+                    clearAutocadCacheTitle: "Очистити кеш AutoCAD",
+                    restartServiceTitle: "Перезапустити службу",
+                    checkNetworkTitle: "Перевірити мережу",
+                    manageProcessTitle: "Управління процесами",
+                    approveVacationTitle: "Затвердити відпустку"
+                },
+                en: {
+                    title: "HELP TOOL",
+                    clearCacheTitle: "Clear Cache",
+                    clearAutocadCacheTitle: "Clear AutoCAD Cache",
+                    restartServiceTitle: "Restart Service",
+                    checkNetworkTitle: "Check Network",
+                    manageProcessTitle: "Manage Processes",
+                    approveVacationTitle: "Approve Vacation"
+                }
+            };
+
+            document.getElementById('title').innerText = translations[lang].title;
+            document.getElementById('clearCacheTitle').innerText = translations[lang].clearCacheTitle;
+            document.getElementById('clearAutocadCacheTitle').innerText = translations[lang].clearAutocadCacheTitle;
+            document.getElementById('restartServiceTitle').innerText = translations[lang].restartServiceTitle;
+            document.getElementById('checkNetworkTitle').innerText = translations[lang].checkNetworkTitle;
+            document.getElementById('manageProcessTitle').innerText = translations[lang].manageProcessTitle;
+            document.getElementById('approveVacationTitle').innerText = translations[lang].approveVacationTitle;
         }
-
-        function closeForm() {
-            document.getElementById('forgotPasswordForm').style.display = 'none';
-        }
-
-       function submitForgotPassword() {
-    const surname = document.getElementById('surname').value;
-    const reason = document.getElementById('reason').value;
-
-    if (surname && reason) {
-        fetch('https://prod-181.westeurope.logic.azure.com:443/workflows/66be78ef08ff42a596c417e5437da9c9/triggers/manual/paths/invoke?api-version=2016-06-01', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ surname: surname, reason: reason })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Данные отправлены успешно!");
-            } else {
-                alert("Ошибка при отправке данных.");
-            }
-        })
-        .catch(error => console.error('Ошибка:', error));
-
-        closeForm();
-    } else {
-        alert("Заполните все поля");
-    }
-}
-
-function changeLanguage(lang) {
-    const translations = {
-        uk: {
-            title: "HELP TOOL",
-            clearCacheTitle: "Очистити кеш",
-            clearAutocadCacheTitle: "Очистити кеш AutoCAD",
-            restartServiceTitle: "Перезапустити службу",
-            checkNetworkTitle: "Перевірити мережу",
-            manageProcessTitle: "Управління процесами",
-            approveVacationTitle: "Затвердити відпустку"
-        },
-        en: {
-            title: "HELP TOOL",
-            clearCacheTitle: "Clear Cache",
-            clearAutocadCacheTitle: "Clear AutoCAD Cache",
-            restartServiceTitle: "Restart Service",
-            checkNetworkTitle: "Check Network",
-            manageProcessTitle: "Manage Processes",
-            approveVacationTitle: "Approve Vacation"
-        }
-    };
-
-    document.getElementById('title').innerText = translations[lang].title;
-    document.getElementById('clearCacheTitle').innerText = translations[lang].clearCacheTitle;
-    document.getElementById('clearAutocadCacheTitle').innerText = translations[lang].clearAutocadCacheTitle;
-    document.getElementById('restartServiceTitle').innerText = translations[lang].restartServiceTitle;
-    document.getElementById('checkNetworkTitle').innerText = translations[lang].checkNetworkTitle;
-    document.getElementById('manageProcessTitle').innerText = translations[lang].manageProcessTitle;
-    document.getElementById('approveVacationTitle').innerText = translations[lang].approveVacationTitle;
-}
-
     </script>
 </body>
 </html>
